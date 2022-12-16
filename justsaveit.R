@@ -1,0 +1,11 @@
+dclus1<-svydesign(id=~dnum, weights=~pw, data=apiclus1)
+svymean(~api00, dclus1)
+jkknife(apiclus1$api00,"dnum",mean,apiclus1)
+
+jkclus1<-as.svrepdesign(dclus1)
+svymean(~api00, jkclus1)
+bclus1<-as.svrepdesign(dclus1,type="bootstrap", replicates=1000)
+svymean(~api00, bclus1)
+dsrs1<-svydesign(id=~api00, weights=~pw, data=apisrs)
+jksrs1<-as.svrepdesign(dsrs1)
+svymean(~api00, jksrs1)
